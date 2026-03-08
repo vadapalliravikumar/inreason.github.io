@@ -328,7 +328,7 @@ section .hero-title {
 }
 
 #benefitsCarousel .carousel-inner {
-    height: 400px; /* Set this to your tallest slide's height */
+    height: 500px; /* Set this to your tallest slide's height */
     overflow: hidden;
 }
 
@@ -413,7 +413,7 @@ section .hero-title {
 }
 
 .contact-card {
-    min-height: auto !important; /* Overrides the 400px from home3.html */
+    min-height: auto !important;
     padding: 2rem !important;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid var(--border-color);
