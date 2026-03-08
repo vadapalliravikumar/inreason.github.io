@@ -1,0 +1,492 @@
+:root {
+    --bg-color: #05070a;
+    --section-alt: #0f172a;
+    --accent-blue: #3b82f6;
+    --accent-glow-blue: rgba(59, 130, 246, 0.2);
+    --border-color: rgba(255, 255, 255, 0.12);
+    --text-main: #ffffff;
+    --text-muted: #94a3b8;
+}
+
+.text-secondary {
+    color: var(--text-muted) !important;
+    transition: color 0.3s ease; /* Makes the theme swap feel smoother */
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    margin: 0;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+
+    /* background-image:
+        radial-gradient(rgba(59, 130, 246, 0.3) 1.5px, transparent 0);
+    background-size: 40px 40px; */
+    background-position: 0 0, 20px 20px; /* Offset creates the isometric look
+    z-index: 0; /* This is the key: it sits above the background but below text */
+    pointer-events: none; /* Allows you to click things through the grid */
+}
+
+/* Logic Grid Background */
+.grid-bg {
+    display: none;
+}
+
+section, header, footer {
+    background-color: transparent !important;
+    position: relative;
+    z-index: 1; /* Ensures content stays above the grid */
+}
+
+/* Section Boundary Styling */
+section:nth-of-type(even) {
+    background:
+        linear-gradient(0deg, var(--accent-glow-blue) 0%, transparent 100%) !important;
+}
+
+section:nth-of-type(odd) {
+    background:
+	linear-gradient(0deg, var(--accent-glow-blue) 0%, transparent 100%) !important;
+}
+
+/* Progress Indicator */
+#progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 4px;
+    background: var(--accent-blue);
+    width: 0%;
+    z-index: 9999;
+}
+
+/* Custom Nav */
+.navbar {
+    backdrop-filter: blur(15px);
+    background: rgba(11, 14, 20, 0.8);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navbar-brand span {
+    color: var(--accent-blue) !important;
+}
+
+.nav-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.7) !important;
+    transition: color 0.3s;
+}
+.nav-link:hover { color: var(--accent-blue) !important; }
+
+@media (max-width: 991px) {
+    .navbar-collapse {
+        background: rgba(11, 14, 20, 0.95); /* Darker blur for mobile menu */
+        backdrop-filter: blur(20px);
+        margin: 0 -1.5rem; /* Full width bleed */
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-link {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        font-size: 0.9rem !important;
+    }
+}
+
+/* Ensure the Lucide menu icon is visible */
+.navbar-toggler i {
+    color: var(--text-main);
+    width: 24px;
+    height: 24px;
+}
+
+.hero-section {
+    padding: 180px 0 100px;
+    text-align: center;
+    background:
+        radial-gradient(100% 50% at 50% 50%, var(--accent-glow-blue), transparent);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.hero-title,
+.hero-title span,
+#typing-text {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.hero-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.2;
+    color: var(--text-main) !important;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+.hero-bg-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none; /* Allows clicking through to buttons */
+}
+
+@media (max-width: 991px) {
+    .left-bg {
+        display: none; /* Keeps mobile clean as discussed */
+    }
+}
+
+.bg-svg-container {
+    position: absolute;
+    opacity: 0.3; /* Adjust this (0.1 to 0.2) for the perfect "watermark" look */
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Sharp left, fades toward center */
+.left-bg {
+    left: 0;
+    top: 50%;
+    transform: translateY(-45%);
+    height: 100%;
+}
+
+/* Sharp right, fades toward center */
+.right-bg {
+    right: 0;
+    top: 50%;
+    transform: translateY(-40%);
+    height: 100%;
+}
+
+.bg-svg-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: brightness(0) saturate(100%) invert(48%) sepia(79%) rotate(201deg) brightness(98%) contrast(92%);
+}
+
+/* The layer that holds the image */
+.section-bg-layer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    justify-content: flex-end; /* Pushes image to the right */
+    align-items: center;
+    pointer-events: none;
+}
+
+/* Mobile and Tablet (Default) */
+.section-bg-img {
+    width: 90%; /* Larger on mobile so it's still visible behind/beside text */
+    height: auto;
+    opacity: 0.15; /* Slightly lower opacity on mobile to keep it from being too busy */
+    transition: width 0.3s ease; /* Smooth transition when resizing window */
+}
+
+/* Laptop and Desktop (Screens wider than 992px) */
+@media (min-width: 992px) {
+    .section-bg-img {
+        width: 50%; /* Your original laptop width */
+    }
+}
+
+/* Extra Large Screens (Optional: for very wide monitors) */
+@media (min-width: 1400px) {
+    .section-bg-img {
+        width: 40%; /* Keeps the image from becoming pathologically huge on 4k monitors */
+    }
+}
+
+/* Ensure the section is the reference point */
+.position-relative {
+    position: relative;
+}
+
+/* Keeps text crisp and on top */
+.z-2 {
+    position: relative;
+    z-index: 2;
+}
+
+header .hero-title {
+    min-height: 1.2em; /* Reduced from 3.6em */
+    margin-bottom: 0.5rem;
+}
+
+/* Specific to static section headers (Benefits, Quotes, etc) */
+section .hero-title {
+    min-height: auto !important; /* Removes the ghost space */
+    margin-bottom: 2rem; /* Standardized spacing */
+}
+
+#typing-text {
+    color: var(--text-main) !important;
+    white-space: pre-wrap;
+    display: inline;
+}
+
+/* Fixed Highlights: Using white and consistent blue border */
+.highlight-in, .highlight-reason {
+    font-family: 'JetBrains Mono', monospace !important;
+    color: var(--accent-blue);
+    font-weight: 800;
+    display: inline-block;
+    padding-bottom: 1px;
+}
+
+/* Typing Cursor Animation */
+.cursor {
+    display: inline-block;
+    width: 3px;
+    height: 1em;
+    background-color: var(--accent-white);
+    margin-left: 2px;
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+}
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@media (max-width: 991px) {
+    /* Stack the two-column paradigm */
+    .col-lg-6.d-flex.flex-column {
+	margin-top: 2rem;
+    }
+    /* Ensure title sizes don't break the layout */
+    .hero-title {
+	font-size: 2rem !important;
+	font-weight: 800;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 1.8rem; /* Scale down for smaller screens */
+	min-height: auto;
+        padding: 0 15px;
+    }
+}
+
+.border-dashed {
+    border: 1px dashed var(--border-color) !important;
+}
+
+/* Custom Carousel Styling to match InReason */
+.carousel-indicators button {
+    background-color: var(--accent-blue) !important;
+    width: 30px !important;    /* Increased width for a bar look */
+    height: 4px !important;    /* Slim height for the bar */
+    border-radius: 0 !important; /* Removes the circle shape */
+    margin: 0 4px;
+
+    border: none !important;
+    opacity: 0.4;              /* Dimmed for inactive bars */
+    transition: opacity 0.3s ease, width 0.3s ease;
+}
+
+.carousel-indicators button.active {
+    opacity: 1; /* Active dot */
+    width: 45px !important;    /* Slightly longer active bar for better UX */
+}
+
+.carousel-control-prev, .carousel-control-next {
+    opacity: 0.7;
+    transition: opacity 0.3s;
+    z-inedx: 5;
+}
+
+/* Ensure the icons inside use the theme's main text color */
+.carousel-control-prev i, .carousel-control-next i {
+    color: var(--text-main) !important;
+}
+
+.carousel-control-prev:hover, .carousel-control-next:hover {
+    opacity: 1;
+}
+
+#benefitsCarousel .carousel-inner {
+    height: 400px; /* Set this to your tallest slide's height */
+    overflow: hidden;
+}
+
+#benefitsCarousel .carousel-item {
+    height: 100% !important;
+}
+
+#benefitsCarousel .glass-panel {
+    height: 100% !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically centers the row */
+}
+
+#benefitsCarousel .row {
+    margin: 0;
+    width: 100%;
+}
+
+/* Responsive adjustment: shorter height for mobile */
+@media (max-width: 768px) {
+    #benefitsCarousel .carousel-inner {
+        min-height: 600px;
+    }
+}
+@media (max-width: 992px) {
+    #benefitsCarousel .carousel-inner {
+        min-height: 550px;
+    }
+}
+
+/* Horizontal Scroll Cards */
+.scroll-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 20px 0;
+    scrollbar-width: none;
+}
+.scroll-container::-webkit-scrollbar { display: none; }
+
+.section-label {
+    font-family: 'JetBrains Mono';
+    color: var(--accent-blue);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+}
+/* Ensure the solid button uses your brand blue */
+.btn-primary {
+    background-color: var(--accent-blue);
+    border: none;
+    transition: transform 0.2s, background-color 0.2s;
+}
+.btn-primary:hover {
+    background-color: #2563eb; /* Slightly darker blue on hover */
+    transform: translateY(-2px);
+}
+.glass-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    min-height: auto;
+    padding: 2.5rem;
+    align-items: center;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* The Opaque Panel */
+.glass-panel-opaque {
+    background: #0f172a; /* Solid Slate 900 - no transparency */
+    /* If you want just a tiny bit of transparency but keep it readable: */
+    /* background: rgba(15, 23, 42, 0.98); */
+
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.contact-card {
+    min-height: auto !important; /* Overrides the 400px from home3.html */
+    padding: 2rem !important;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.contact-card:hover {
+    border-color: var(--accent-blue);
+    background: rgba(59, 130, 246, 0.05);
+    transform: translateY(-5px);
+}
+
+/* Adjust icon size for Lucide icons */
+[data-lucide] {
+    stroke-width: 1.5px;
+}
+
+
+.border-start-custom {
+    border-left: 1px solid var(--border-color);
+}
+
+#quotes-section .quote-text {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    font-style: italic;
+    min-height: 80px;
+    margin-bottom: 1.5rem;
+}
+
+/* Ensure the carousel doesn't jump in height if one quote is longer than others */
+#quotes-section .carousel-inner {
+    display: flex;
+    align-items: center;
+    min-height: 300px; /* Adjust based on your longest quote */
+}
+
+/* Style the dots to match your InReason branding */
+#quotes-section .carousel-indicators [button] {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--accent-blue);
+}
+
+.icon-accent {
+    width: 48px;
+    height: 48px;
+    color: var(--accent-blue);
+    stroke-width: 1.5;
+    filter: drop-shadow(0 0 8px var(--accent-glow-blue));
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+li i, li svg {
+    vertical-align: middle;
+    stroke-width: 1.5;
+    color: var(--accent-blue);
+    filter: drop-shadow(0 0 5px var(--accent-glow-blue));
+}
+
+footer {
+    padding: 20px 0;
+    background: rgba(11, 14, 20, 0.8);
+    color: var(--text-main);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+    z-index: 1;
+}
