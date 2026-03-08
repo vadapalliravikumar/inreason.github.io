@@ -328,7 +328,7 @@ section .hero-title {
 }
 
 #benefitsCarousel .carousel-inner {
-    height: 500px; /* Set this to your tallest slide's height */
+    height: 400px; /* Set this to your tallest slide's height */
     overflow: hidden;
 }
 
@@ -356,7 +356,7 @@ section .hero-title {
 }
 @media (max-width: 992px) {
     #benefitsCarousel .carousel-inner {
-        min-height: 550px;
+        min-height: 600px;
     }
 }
 
